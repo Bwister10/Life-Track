@@ -1,0 +1,416 @@
+.container {
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .header h1 {
+  color: #f9fafb;
+}
+
+.header p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.container.dark .header p {
+  color: #9ca3af;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e5e7eb;
+  flex-wrap: wrap;
+}
+
+.container.dark .tabs {
+  border-bottom-color: #374151;
+}
+
+.tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.container.dark .tab {
+  color: #9ca3af;
+}
+
+.tab:hover {
+  color: var(--color-blue-600);
+}
+
+.tab.active {
+  color: var(--color-blue-600);
+  border-bottom-color: var(--color-blue-600);
+}
+
+.container.dark .tab.active {
+  color: #93c5fd;
+  border-bottom-color: #93c5fd;
+}
+
+.progressList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progressCard {
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+.container.dark .progressCard {
+  background: #374151;
+}
+
+.progressCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progressHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.progressInfo {
+  flex: 1;
+}
+
+.progressTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.progressIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.progressTitle h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.container.dark .progressTitle h3 {
+  color: #f9fafb;
+}
+
+.progressMeta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+
+.container.dark .progressMeta {
+  color: #9ca3af;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.statusBadge.completed {
+  background: #10b981;
+}
+
+.statusBadge.inProgress {
+  background: var(--color-blue-600);
+}
+
+.statusBadge.overdue {
+  background: #ef4444;
+}
+
+.progressBarSection {
+  margin-bottom: 1rem;
+}
+
+.progressBarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.progressLabel {
+  color: #6b7280;
+}
+
+.container.dark .progressLabel {
+  color: #9ca3af;
+}
+
+.progressValue {
+  font-weight: 600;
+  color: #111827;
+}
+
+.container.dark .progressValue {
+  color: #f9fafb;
+}
+
+.progressBar {
+  width: 100%;
+  height: 0.75rem;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.container.dark .progressBar {
+  background: #1f2937;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-blue-600), var(--color-purple-600));
+  transition: width 0.3s;
+  border-radius: 9999px;
+}
+
+.milestones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.milestone {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.container.dark .milestone {
+  background: #1f2937;
+}
+
+.milestoneIcon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.milestoneIcon.completed {
+  background: #10b981;
+  color: var(--color-white);
+}
+
+.milestoneIcon.pending {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+.container.dark .milestoneIcon.pending {
+  background: #374151;
+  color: #9ca3af;
+}
+
+.milestoneContent {
+  flex: 1;
+}
+
+.milestoneContent h4 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.container.dark .milestoneContent h4 {
+  color: #f9fafb;
+}
+
+.milestoneContent p {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.container.dark .milestoneContent p {
+  color: #9ca3af;
+}
+
+.habitProgress {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .habitProgress {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.habitCard {
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.container.dark .habitCard {
+  background: #374151;
+}
+
+.habitHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.habitIconBox {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.habitInfo h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.container.dark .habitInfo h3 {
+  color: #f9fafb;
+}
+
+.habitStreak {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #f97316;
+  font-weight: 600;
+}
+
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  margin-top: 1rem;
+}
+
+.heatmapCell {
+  aspect-ratio: 1;
+  border-radius: 0.25rem;
+  background: #e5e7eb;
+  transition: all 0.2s;
+}
+
+.container.dark .heatmapCell {
+  background: #1f2937;
+}
+
+.heatmapCell.level1 {
+  background: #dbeafe;
+}
+
+.heatmapCell.level2 {
+  background: #93c5fd;
+}
+
+.heatmapCell.level3 {
+  background: #3b82f6;
+}
+
+.heatmapCell.level4 {
+  background: var(--color-blue-600);
+}
+
+.emptyState {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.emptyIcon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  color: #d1d5db;
+}
+
+.container.dark .emptyIcon {
+  color: #4b5563;
+}
+
+.emptyState h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .emptyState h3 {
+  color: #f9fafb;
+}
+
+.emptyState p {
+  color: #6b7280;
+}
+
+.container.dark .emptyState p {
+  color: #9ca3af;
+}

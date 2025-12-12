@@ -1,0 +1,419 @@
+.container {
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .header h1 {
+  color: #f9fafb;
+}
+
+.header p {
+  color: #6b7280;
+  font-size: 1.125rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.container.dark .header p {
+  color: #9ca3af;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.pricingGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .pricingGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.pricingCard {
+  padding: 2rem;
+  background: var(--color-white);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.container.dark .pricingCard {
+  background: #374151;
+}
+
+.pricingCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.pricingCard.popular {
+  border-color: var(--color-blue-600);
+}
+
+.popularBadge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 1rem;
+  background: var(--color-blue-600);
+  color: white;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.planIcon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.planIcon.free {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.container.dark .planIcon.free {
+  background: #1f2937;
+  color: #9ca3af;
+}
+
+.planIcon.pro {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+}
+
+.planIcon.enterprise {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: white;
+}
+
+.planName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .planName {
+  color: #f9fafb;
+}
+
+.planDescription {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.container.dark .planDescription {
+  color: #9ca3af;
+}
+
+.priceSection {
+  margin-bottom: 1.5rem;
+}
+
+.price {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.container.dark .price {
+  color: #f9fafb;
+}
+
+.pricePeriod {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.container.dark .pricePeriod {
+  color: #9ca3af;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9375rem;
+  color: #374151;
+}
+
+.container.dark .featureItem {
+  color: #d1d5db;
+}
+
+.featureIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.featureIcon.included {
+  color: #10b981;
+}
+
+.featureIcon.excluded {
+  color: #d1d5db;
+}
+
+.container.dark .featureIcon.excluded {
+  color: #4b5563;
+}
+
+.subscribeButton {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subscribeButton.primary {
+  background: var(--color-blue-600);
+  color: white;
+}
+
+.subscribeButton.primary:hover {
+  background: #1d4ed8;
+}
+
+.subscribeButton.secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.container.dark .subscribeButton.secondary {
+  background: #1f2937;
+  color: #d1d5db;
+}
+
+.subscribeButton.secondary:hover {
+  background: #e5e7eb;
+}
+
+.container.dark .subscribeButton.secondary:hover {
+  background: #111827;
+}
+
+.subscribeButton.gradient {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: white;
+}
+
+.subscribeButton.gradient:hover {
+  opacity: 0.9;
+}
+
+.featuresSection {
+  margin-top: 4rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.container.dark .sectionTitle {
+  color: #f9fafb;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featuresGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.featureCard {
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.container.dark .featureCard {
+  background: #374151;
+}
+
+.featureCardIcon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  background: #eff6ff;
+  color: var(--color-blue-600);
+}
+
+.container.dark .featureCardIcon {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+
+.featureCard h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .featureCard h3 {
+  color: #f9fafb;
+}
+
+.featureCard p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.container.dark .featureCard p {
+  color: #9ca3af;
+}
+
+.faqSection {
+  margin-top: 4rem;
+}
+
+.faqList {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faqItem {
+  padding: 1.5rem;
+  background: var(--color-white);
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.container.dark .faqItem {
+  background: #374151;
+}
+
+.faqQuestion {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .faqQuestion {
+  color: #f9fafb;
+}
+
+.faqAnswer {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.container.dark .faqAnswer {
+  color: #9ca3af;
+}
+
+.guarantee {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border-radius: 1rem;
+}
+
+.container.dark .guarantee {
+  background: linear-gradient(135deg, #14532d, #166534);
+}
+
+.guaranteeIcon {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 1rem;
+  color: #10b981;
+}
+
+.guarantee h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .guarantee h3 {
+  color: #f9fafb;
+}
+
+.guarantee p {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.container.dark .guarantee p {
+  color: #9ca3af;
+}
