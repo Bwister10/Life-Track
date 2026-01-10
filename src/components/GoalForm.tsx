@@ -126,33 +126,28 @@ export const GoalForm = ({ open, onClose, onSave, goal, isPremium = false, darkM
 
           <div>
             <Label>Icon</Label>
-            <div className="flex items-center gap-4 mt-2">
+            <div className="flex items-center gap-3 mt-2">
               <EmojiPicker
                 selectedEmoji={formData.icon}
                 onSelect={(emoji) => setFormData({ ...formData, icon: emoji })}
                 isPremium={isPremium}
                 darkMode={darkMode}
               />
-              <div className="flex-1">
-                <p className="text-sm text-muted-foreground">
-                  {isPremium ? 'Choose any emoji for your goal' : 'Upgrade to Pro for more emojis'}
-                </p>
-                <div className="flex gap-1 mt-2">
-                  {ICONS.slice(0, 6).map((icon) => (
-                    <button
-                      key={icon}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, icon })}
-                      className={`w-8 h-8 rounded-lg flex items-center justify-center text-lg transition-all ${
-                        formData.icon === icon
-                          ? 'ring-2 ring-primary scale-110'
-                          : 'hover:scale-105 bg-secondary'
-                      }`}
-                    >
-                      {icon}
-                    </button>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-1">
+                {ICONS.map((icon) => (
+                  <button
+                    key={icon}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, icon })}
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center text-lg transition-all ${
+                      formData.icon === icon
+                        ? 'ring-2 ring-primary scale-110'
+                        : 'hover:scale-105 bg-secondary'
+                    }`}
+                  >
+                    {icon}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

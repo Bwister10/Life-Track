@@ -191,6 +191,11 @@
   pointer-events: all;
 }
 
+/* Prevent body scroll when sidebar is open */
+:global(body.sidebar-open) {
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
   .backdrop {
     display: block;

@@ -35,6 +35,7 @@ import PremiumPage from "./PremiumPage";
 import SettingsPage from "./SettingsPage";
 import AccountPage, { UserData } from "./AccountPage";
 import NotificationsPage from "./NotificationsPage";
+import AchievementsPage from "./AchievementsPage";
 import { playCompletionSound, playGoalCompleteSound, playStreakSound } from "@/lib/sounds";
 
 export default function Dashboard() {
@@ -75,16 +76,21 @@ export default function Dashboard() {
     // Check if user is logged in
     const loggedIn = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedIn);
-    setShowAnnouncementBar(!loggedIn);
 
     // Load user data
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        const parsedUser = JSON.parse(savedUser);
+        setUser(parsedUser);
+        // Show premium banner only for non-premium users
+        setShowAnnouncementBar(!parsedUser.isPremium);
       } catch (e) {
         console.error("Failed to parse user data");
+        setShowAnnouncementBar(false);
       }
+    } else {
+      setShowAnnouncementBar(false);
     }
   }, []);
 
@@ -323,18 +329,12 @@ export default function Dashboard() {
     setActiveView("premium");
   };
 
-  const handleLoginClick = () => {
-    // Simulate login - will be replaced with actual auth later
-    localStorage.setItem("isLoggedIn", "true");
-    setIsLoggedIn(true);
-    setShowAnnouncementBar(false);
-    toast({ title: "Login page coming soon!" });
-  };
+
 
   const handleViewChange = (view: string) => {
     setActiveView(view);
     // Don't show toast for implemented pages
-    if (view !== "goals" && view !== "habits" && view !== "dashboard" && view !== "analytics" && view !== "progress" && view !== "premium" && view !== "settings" && view !== "account" && view !== "notifications") {
+    if (view !== "goals" && view !== "habits" && view !== "dashboard" && view !== "analytics" && view !== "progress" && view !== "premium" && view !== "settings" && view !== "account" && view !== "notifications" && view !== "achievements") {
       toast({
         title: `${view.charAt(0).toUpperCase() + view.slice(1)}`,
         description: "Coming soon!",
@@ -354,7 +354,10 @@ export default function Dashboard() {
     setUser(null);
     setIsLoggedIn(false);
     localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
     toast({ title: "Signed out", description: "You have been logged out." });
+    // Redirect to landing page
+    window.location.reload();
   };
 
   return (
@@ -371,9 +374,9 @@ export default function Dashboard() {
         {showConfetti && <Confetti onComplete={() => setShowConfetti(false)} />}
       </AnimatePresence>
 
-      {/* Announcement Bar */}
+      {/* Welcome Banner for Logged-in Users */}
       <AnimatePresence>
-        {showAnnouncementBar && !isLoggedIn && (
+        {showAnnouncementBar && user && !user.isPremium && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -383,16 +386,15 @@ export default function Dashboard() {
             <div className={styles.announcementContent}>
               <div className={styles.announcementText}>
                 <p>
-                  🎯 Create an account or login to save your progress across
-                  devices!
+                  ✨ Upgrade to Premium for unlimited goals, advanced analytics, and cloud sync!
                 </p>
               </div>
               <div className={styles.announcementActions}>
                 <button
-                  onClick={handleLoginClick}
+                  onClick={handlePremiumClick}
                   className={styles.loginButton}
                 >
-                  Login / Sign Up
+                  Upgrade Now
                 </button>
                 <button
                   onClick={() => setShowAnnouncementBar(false)}
@@ -460,6 +462,12 @@ export default function Dashboard() {
           />
         ) : activeView === "notifications" ? (
           <NotificationsPage darkMode={darkMode} />
+        ) : activeView === "achievements" ? (
+          <AchievementsPage 
+            darkMode={darkMode} 
+            goals={goals}
+            habits={habits}
+          />
         ) : (
           <>
             <motion.div

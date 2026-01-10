@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Crown, X, Search } from 'lucide-react';
 
@@ -26,6 +26,16 @@ export default function EmojiPicker({ selectedEmoji, onSelect, isPremium = false
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Goals');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const filteredEmojis = searchQuery
     ? Object.values(emojiCategories).flat().filter(emoji => 
@@ -72,9 +82,13 @@ export default function EmojiPicker({ selectedEmoji, onSelect, isPremium = false
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               className={`
-                absolute z-50 top-full left-0 mt-2 w-80 rounded-xl shadow-xl border
+                ${isMobile 
+                  ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-80' 
+                  : 'absolute top-0 left-full ml-2 w-80'
+                } z-50 rounded-xl shadow-xl border
                 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}
               `}
+              style={{ maxHeight: isMobile ? '80vh' : '400px' }}
             >
               {/* Header */}
               <div className={`flex items-center justify-between p-3 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>

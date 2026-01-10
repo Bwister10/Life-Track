@@ -70,7 +70,22 @@
     * {
       @apply border-border;
     }
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       @apply bg-background text-foreground;
     }
+  }
+
+  /* CSS Variables for custom colors used in components */
+  :root {
+    --color-white: #ffffff;
+    --color-blue-600: #2563eb;
+    --color-purple-600: #9333ea;
+    --color-orange-500: #f97316;
+  }
+
+  .dark {
+    --color-white: #1f2937;
   }

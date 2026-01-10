@@ -11,7 +11,8 @@ import {
   Home,
   TrendingUp,
   Menu,
-  X
+  X,
+  Award
 } from 'lucide-react';
 import styles from './Sidebar.module.css';
 
@@ -32,26 +33,41 @@ export default function Sidebar({
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+    const newExpanded = !isExpanded;
+    setIsExpanded(newExpanded);
+    // Prevent body scroll when sidebar is expanded
+    if (newExpanded) {
+      document.body.classList.add('sidebar-open');
+    } else {
+      document.body.classList.remove('sidebar-open');
+    }
   };
 
   const toggleMobileSidebar = () => {
-    setIsMobileOpen(!isMobileOpen);
+    const newMobileOpen = !isMobileOpen;
+    setIsMobileOpen(newMobileOpen);
+    // Prevent body scroll when mobile sidebar is open
+    if (newMobileOpen) {
+      document.body.classList.add('sidebar-open');
+    } else {
+      document.body.classList.remove('sidebar-open');
+    }
   };
 
   const closeSidebar = () => {
     setIsExpanded(false);
     setIsMobileOpen(false);
+    document.body.classList.remove('sidebar-open');
   };
 
   const handleMenuClick = (view: string) => {
     if (onViewChange) {
       onViewChange(view);
     }
-    // Close mobile sidebar after selection
-    if (window.innerWidth <= 768) {
-      setIsMobileOpen(false);
-    }
+    // Close sidebar after selection on all devices
+    setIsExpanded(false);
+    setIsMobileOpen(false);
+    document.body.classList.remove('sidebar-open');
   };
 
   const menuItems = [
@@ -60,6 +76,7 @@ export default function Sidebar({
     { id: 'habits', icon: Calendar, label: 'Habits' },
     { id: 'analytics', icon: BarChart3, label: 'Analytics' },
     { id: 'progress', icon: TrendingUp, label: 'Progress' },
+    { id: 'achievements', icon: Award, label: 'Achievements' },
   ];
 
   const bottomItems = [
