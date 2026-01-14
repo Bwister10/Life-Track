@@ -86,45 +86,147 @@ export default function AnalyticsPage({ goals, habits, darkMode }: AnalyticsPage
     };
   }, [goals, habits, timeRange]);
 
-  // Generate insights
+  // Generate insights based on user performance
   const insights = useMemo(() => {
-    const insightsList = [];
+    const insightsList: Array<{ icon: React.ElementType; title: string; description: string; type: 'success' | 'warning' | 'info' | 'tip' }> = [];
+    const overdueGoals = goals.filter(g => g.status === 'overdue').length;
+    const inProgressGoals = goals.filter(g => g.status === 'in-progress').length;
+    const maxStreak = Math.max(...habits.map(h => h.streak), 0);
+    const habitsCompletedToday = habits.filter(h => {
+      const today = new Date().toISOString().split('T')[0];
+      return h.completedDates.includes(today);
+    }).length;
 
-    if (analytics.completionRate >= 80) {
+    // Performance-based insights
+    if (analytics.completionRate >= 90) {
       insightsList.push({
         icon: Award,
-        title: 'Excellent Performance!',
-        description: `You're crushing it with ${analytics.completionRate}% goal completion rate!`
+        title: 'Outstanding Achievement!',
+        description: `You're in the top tier with ${analytics.completionRate}% goal completion rate. Absolutely incredible work!`,
+        type: 'success'
       });
-    }
-
-    if (analytics.avgStreak >= 7) {
+    } else if (analytics.completionRate >= 70) {
       insightsList.push({
-        icon: Zap,
-        title: 'Consistency Champion',
-        description: `Your average habit streak is ${analytics.avgStreak} days. Keep it up!`
+        icon: Award,
+        title: 'Great Performance!',
+        description: `${analytics.completionRate}% completion rate shows strong commitment. You're doing fantastic!`,
+        type: 'success'
       });
-    }
-
-    if (analytics.activeStreaks < analytics.totalHabits / 2) {
+    } else if (analytics.completionRate >= 50) {
       insightsList.push({
         icon: TrendingUp,
-        title: 'Room for Improvement',
-        description: 'Try to maintain streaks on more habits for better consistency.'
+        title: 'Solid Progress',
+        description: `${analytics.completionRate}% completion rate. Focus on 2-3 key goals to boost this further.`,
+        type: 'info'
+      });
+    } else if (analytics.completionRate > 0) {
+      insightsList.push({
+        icon: Lightbulb,
+        title: 'Building Momentum',
+        description: 'Start with smaller, achievable goals to build confidence and consistency.',
+        type: 'tip'
       });
     }
 
-    const overdueGoals = goals.filter(g => g.status === 'overdue').length;
+    // Streak-based insights
+    if (maxStreak >= 30) {
+      insightsList.push({
+        icon: Zap,
+        title: 'Legendary Streak! 🔥',
+        description: `${maxStreak}-day streak! You've mastered the art of consistency. Truly inspiring!`,
+        type: 'success'
+      });
+    } else if (maxStreak >= 14) {
+      insightsList.push({
+        icon: Zap,
+        title: 'Streak Master',
+        description: `${maxStreak} days strong! You're building powerful habits. Keep the momentum!`,
+        type: 'success'
+      });
+    } else if (maxStreak >= 7) {
+      insightsList.push({
+        icon: Zap,
+        title: 'One Week Wonder',
+        description: `${maxStreak}-day streak achieved! Research shows 21 days builds lasting habits.`,
+        type: 'info'
+      });
+    } else if (maxStreak >= 3) {
+      insightsList.push({
+        icon: Lightbulb,
+        title: 'Streak Building',
+        description: 'Great start! Try completing habits at the same time each day for better consistency.',
+        type: 'tip'
+      });
+    }
+
+    // Activity-based insights
+    if (habitsCompletedToday === analytics.totalHabits && analytics.totalHabits > 0) {
+      insightsList.push({
+        icon: Award,
+        title: 'Perfect Day! ⭐',
+        description: 'You completed all habits today! This consistency is what builds success.',
+        type: 'success'
+      });
+    } else if (habitsCompletedToday > 0 && habitsCompletedToday < analytics.totalHabits) {
+      insightsList.push({
+        icon: Target,
+        title: 'Almost There!',
+        description: `${analytics.totalHabits - habitsCompletedToday} habit${analytics.totalHabits - habitsCompletedToday > 1 ? 's' : ''} left today. You can do it!`,
+        type: 'info'
+      });
+    }
+
+    // Warning insights
     if (overdueGoals > 0) {
       insightsList.push({
         icon: Target,
-        title: 'Overdue Goals Alert',
-        description: `You have ${overdueGoals} overdue goal${overdueGoals > 1 ? 's' : ''}. Consider reviewing deadlines.`
+        title: 'Attention Needed',
+        description: `${overdueGoals} goal${overdueGoals > 1 ? 's are' : ' is'} overdue. Consider extending deadlines or breaking them into smaller tasks.`,
+        type: 'warning'
       });
     }
 
-    return insightsList;
-  }, [analytics, goals]);
+    if (analytics.activeStreaks === 0 && analytics.totalHabits > 0) {
+      insightsList.push({
+        icon: Calendar,
+        title: 'Restart Your Streaks',
+        description: 'All streaks are at zero. Pick one habit to focus on today and rebuild from there.',
+        type: 'warning'
+      });
+    }
+
+    // Goal-specific tips
+    if (inProgressGoals > 5) {
+      insightsList.push({
+        icon: Lightbulb,
+        title: 'Focus Tip',
+        description: `You have ${inProgressGoals} goals in progress. Consider prioritizing 3-5 to maintain focus.`,
+        type: 'tip'
+      });
+    }
+
+    // Habit recommendations
+    if (analytics.totalHabits === 0) {
+      insightsList.push({
+        icon: Lightbulb,
+        title: 'Start with Habits',
+        description: 'Create daily habits to build consistency. Small daily actions lead to big results!',
+        type: 'tip'
+      });
+    }
+
+    if (analytics.totalGoals === 0) {
+      insightsList.push({
+        icon: Lightbulb,
+        title: 'Set Your First Goal',
+        description: 'Define a meaningful goal to give direction to your efforts. Start with something achievable!',
+        type: 'tip'
+      });
+    }
+
+    // Return only the first 4 most relevant insights
+    return insightsList.slice(0, 4);
+  }, [analytics, goals, habits]);
 
   const categoryColors: Record<string, string> = {
     personal: 'var(--color-blue-600)',
@@ -334,15 +436,21 @@ export default function AnalyticsPage({ goals, habits, darkMode }: AnalyticsPage
               <div className={styles.insightsList}>
                 {insights.length > 0 ? (
                   insights.map((insight, index) => (
-                    <div key={index} className={styles.insightItem}>
-                      <div className={styles.insightIcon}>
+                    <motion.div 
+                      key={index} 
+                      className={`${styles.insightItem} ${styles[insight.type]}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 * index }}
+                    >
+                      <div className={`${styles.insightIcon} ${styles[insight.type]}`}>
                         <insight.icon size={18} />
                       </div>
                       <div className={styles.insightContent}>
                         <h4>{insight.title}</h4>
                         <p>{insight.description}</p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))
                 ) : (
                   <div className={styles.insightItem}>

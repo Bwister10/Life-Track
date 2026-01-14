@@ -12,7 +12,9 @@ import {
   TrendingUp,
   Menu,
   X,
-  Award
+  Award,
+  Sparkles,
+  Users
 } from 'lucide-react';
 import styles from './Sidebar.module.css';
 
@@ -31,6 +33,11 @@ export default function Sidebar({
 }: SidebarProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  
+  // Check if user is premium
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isPremium = user.isPremium || false;
+  const isEnterprise = user.planType === 'enterprise';
 
   const toggleSidebar = () => {
     const newExpanded = !isExpanded;
@@ -77,10 +84,11 @@ export default function Sidebar({
     { id: 'analytics', icon: BarChart3, label: 'Analytics' },
     { id: 'progress', icon: TrendingUp, label: 'Progress' },
     { id: 'achievements', icon: Award, label: 'Achievements' },
+    { id: 'team', icon: Users, label: 'Team', enterprise: true },
   ];
 
   const bottomItems = [
-    { id: 'premium', icon: Crown, label: 'Premium', special: true },
+    { id: 'premium', icon: isPremium ? Sparkles : Crown, label: isPremium ? 'Pro' : 'Premium', special: true, isPro: isPremium },
     { id: 'settings', icon: Settings, label: 'Settings' },
     { id: 'account', icon: User, label: 'Account' },
   ];

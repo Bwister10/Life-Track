@@ -368,10 +368,51 @@
   background: #f9fafb;
   border-radius: 0.5rem;
   border-left: 4px solid var(--color-blue-600);
+  transition: all 0.3s ease;
+}
+
+.insightItem:hover {
+  transform: translateX(4px);
+}
+
+.insightItem.success {
+  border-left-color: #10b981;
+  background: #f0fdf4;
+}
+
+.insightItem.warning {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+}
+
+.insightItem.info {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.insightItem.tip {
+  border-left-color: #8b5cf6;
+  background: #faf5ff;
 }
 
 .container.dark .insightItem {
   background: #1f2937;
+}
+
+.container.dark .insightItem.success {
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.container.dark .insightItem.warning {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.container.dark .insightItem.info {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.container.dark .insightItem.tip {
+  background: rgba(139, 92, 246, 0.1);
 }
 
 .insightIcon {
@@ -384,6 +425,22 @@
   background: var(--color-blue-600);
   color: var(--color-white);
   flex-shrink: 0;
+}
+
+.insightIcon.success {
+  background: #10b981;
+}
+
+.insightIcon.warning {
+  background: #f59e0b;
+}
+
+.insightIcon.info {
+  background: #3b82f6;
+}
+
+.insightIcon.tip {
+  background: #8b5cf6;
 }
 
 .insightContent h4 {

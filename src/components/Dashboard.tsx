@@ -36,6 +36,7 @@ import SettingsPage from "./SettingsPage";
 import AccountPage, { UserData } from "./AccountPage";
 import NotificationsPage from "./NotificationsPage";
 import AchievementsPage from "./AchievementsPage";
+import TeamPage from "./TeamPage";
 import { playCompletionSound, playGoalCompleteSound, playStreakSound } from "@/lib/sounds";
 
 export default function Dashboard() {
@@ -334,7 +335,7 @@ export default function Dashboard() {
   const handleViewChange = (view: string) => {
     setActiveView(view);
     // Don't show toast for implemented pages
-    if (view !== "goals" && view !== "habits" && view !== "dashboard" && view !== "analytics" && view !== "progress" && view !== "premium" && view !== "settings" && view !== "account" && view !== "notifications" && view !== "achievements") {
+    if (view !== "goals" && view !== "habits" && view !== "dashboard" && view !== "analytics" && view !== "progress" && view !== "premium" && view !== "settings" && view !== "account" && view !== "notifications" && view !== "achievements" && view !== "team") {
       toast({
         title: `${view.charAt(0).toUpperCase() + view.slice(1)}`,
         description: "Coming soon!",
@@ -450,14 +451,22 @@ export default function Dashboard() {
         ) : activeView === "premium" ? (
           <PremiumPage darkMode={darkMode} />
         ) : activeView === "settings" ? (
-          <SettingsPage darkMode={darkMode} onToggleDarkMode={toggleDarkMode} />
+          <SettingsPage 
+            darkMode={darkMode} 
+            onToggleDarkMode={toggleDarkMode}
+            goals={goals}
+            habits={habits}
+            onImportData={(importedGoals, importedHabits) => {
+              setGoals(prev => [...prev, ...importedGoals]);
+              setHabits(prev => [...prev, ...importedHabits]);
+            }}
+          />
         ) : activeView === "account" ? (
           <AccountPage 
             darkMode={darkMode} 
             goals={goals}
             habits={habits}
             user={user}
-            onLogin={handleLogin}
             onLogout={handleLogout}
           />
         ) : activeView === "notifications" ? (
@@ -465,6 +474,12 @@ export default function Dashboard() {
         ) : activeView === "achievements" ? (
           <AchievementsPage 
             darkMode={darkMode} 
+            goals={goals}
+            habits={habits}
+          />
+        ) : activeView === "team" ? (
+          <TeamPage
+            darkMode={darkMode}
             goals={goals}
             habits={habits}
           />

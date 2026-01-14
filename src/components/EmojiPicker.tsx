@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Crown, X, Search } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
+import { Crown, X, Search, GripHorizontal } from 'lucide-react';
 
 interface EmojiPickerProps {
   selectedEmoji: string;
@@ -26,16 +26,8 @@ export default function EmojiPicker({ selectedEmoji, onSelect, isPremium = false
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Goals');
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const dragControls = useDragControls();
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const filteredEmojis = searchQuery
     ? Object.values(emojiCategories).flat().filter(emoji => 
@@ -72,29 +64,39 @@ export default function EmojiPicker({ selectedEmoji, onSelect, isPremium = false
           <>
             {/* Backdrop */}
             <div 
-              className="fixed inset-0 z-40"
+              ref={constraintsRef}
+              className="fixed inset-0 z-40 bg-black/20"
               onClick={() => setIsOpen(false)}
             />
             
-            {/* Picker */}
+            {/* Picker - Centered and Draggable */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              drag
+              dragControls={dragControls}
+              dragListener={false}
+              dragConstraints={constraintsRef}
+              dragElastic={0.1}
               className={`
-                ${isMobile 
-                  ? 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-80' 
-                  : 'absolute top-0 left-full ml-2 w-80'
-                } z-50 rounded-xl shadow-xl border
+                fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-80
+                z-50 rounded-xl shadow-2xl border
                 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}
               `}
-              style={{ maxHeight: isMobile ? '80vh' : '400px' }}
+              style={{ maxHeight: '80vh' }}
             >
-              {/* Header */}
-              <div className={`flex items-center justify-between p-3 border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
-                <span className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                  Choose Icon
-                </span>
+              {/* Draggable Header */}
+              <div 
+                className={`flex items-center justify-between p-3 border-b cursor-move select-none ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}
+                onPointerDown={(e) => dragControls.start(e)}
+              >
+                <div className="flex items-center gap-2">
+                  <GripHorizontal size={16} className={darkMode ? 'text-gray-500' : 'text-gray-400'} />
+                  <span className={`font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    Choose Icon
+                  </span>
+                </div>
                 <button
                   onClick={() => setIsOpen(false)}
                   className={`p-1 rounded-lg hover:bg-gray-100 ${darkMode ? 'hover:bg-gray-700' : ''}`}

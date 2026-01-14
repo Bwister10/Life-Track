@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { 
   Crown, 
   Check, 
@@ -18,6 +19,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import styles from './PremiumPage.module.css';
+import CheckoutPage from './CheckoutPage';
 
 interface PremiumPageProps {
   darkMode: boolean;
@@ -143,6 +145,91 @@ const faqs = [
 ];
 
 export default function PremiumPage({ darkMode }: PremiumPageProps) {
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<'pro' | 'enterprise'>('pro');
+  
+  // Check if user is already premium
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isPremium = user.isPremium || false;
+  const currentPlanType = user.planType || 'free';
+
+  const handleUpgradeClick = (planType: 'pro' | 'enterprise') => {
+    setSelectedPlan(planType);
+    setShowCheckout(true);
+  };
+
+  const handleCheckoutSuccess = () => {
+    setShowCheckout(false);
+    // Reload page to reflect premium status
+    window.location.reload();
+  };
+
+  if (showCheckout) {
+    return (
+      <CheckoutPage
+        darkMode={darkMode}
+        planType={selectedPlan}
+        onBack={() => setShowCheckout(false)}
+        onSuccess={handleCheckoutSuccess}
+      />
+    );
+  }
+
+  // If user is already premium, show their current plan status
+  if (isPremium) {
+    return (
+      <div className={`${styles.container} ${darkMode ? styles.dark : ''}`}>
+        <div className={styles.header}>
+          <div className={styles.premiumBadge}>
+            <Crown size={24} />
+            <span>Pro Member</span>
+          </div>
+          <h1>You're a Pro! 🎉</h1>
+          <p>Thank you for being a premium member. You have access to all Pro features.</p>
+        </div>
+        
+        <div className={styles.currentPlanCard}>
+          <div className={styles.planStatusHeader}>
+            <div className={`${styles.planIcon} ${styles.pro}`}>
+              <Zap size={32} />
+            </div>
+            <div>
+              <h2>{currentPlanType === 'enterprise' ? 'Enterprise Plan' : 'Pro Plan'}</h2>
+              <p>Active subscription</p>
+            </div>
+          </div>
+          
+          <div className={styles.benefitsList}>
+            <h3>Your Premium Benefits:</h3>
+            <ul>
+              <li><Check size={18} /> Unlimited goals & habits</li>
+              <li><Check size={18} /> Advanced analytics & insights</li>
+              <li><Check size={18} /> Cloud sync across devices</li>
+              <li><Check size={18} /> Custom emoji icons (100+)</li>
+              <li><Check size={18} /> Custom themes & colors</li>
+              <li><Check size={18} /> Export data (CSV, PDF)</li>
+              <li><Check size={18} /> Priority support</li>
+            </ul>
+          </div>
+          
+          {currentPlanType !== 'enterprise' && (
+            <div className={styles.upgradeSection}>
+              <h3>Want more?</h3>
+              <p>Upgrade to Enterprise for team collaboration and advanced features.</p>
+              <button 
+                className={styles.upgradeToEnterprise}
+                onClick={() => handleUpgradeClick('enterprise')}
+              >
+                <Crown size={18} />
+                Upgrade to Enterprise
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${styles.container} ${darkMode ? styles.dark : ''}`}>
       {/* Header */}
@@ -194,7 +281,14 @@ export default function PremiumPage({ darkMode }: PremiumPageProps) {
               ))}
             </ul>
             
-            <button className={`${styles.subscribeButton} ${styles[plan.buttonStyle]}`}>
+            <button 
+              className={`${styles.subscribeButton} ${styles[plan.buttonStyle]}`}
+              onClick={() => {
+                if (plan.name === 'Pro') handleUpgradeClick('pro');
+                else if (plan.name === 'Enterprise') handleUpgradeClick('enterprise');
+              }}
+              disabled={plan.name === 'Free'}
+            >
               {plan.buttonText}
             </button>
           </motion.div>

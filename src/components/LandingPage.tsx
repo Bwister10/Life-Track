@@ -662,13 +662,13 @@ export default function LandingPage({
             >
               <div className={styles.popularBadge}>Most Popular</div>
               <div className={styles.pricingHeader}>
-                <h3>Premium</h3>
+                <h3>Pro</h3>
                 <div className={styles.price}>
                   <span className={styles.currency}>$</span>
-                  <span className={styles.amount}>4.99</span>
+                  <span className={styles.amount}>9.99</span>
                   <span className={styles.period}>/month</span>
                 </div>
-                <p>For the serious achiever</p>
+                <p>For serious goal achievers</p>
               </div>
               <ul className={styles.pricingFeatures}>
                 <li>

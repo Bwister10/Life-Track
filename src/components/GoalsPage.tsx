@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Goal } from '@/types/goals';
 import { GoalCard } from '@/components/GoalCard';
 import { GoalForm } from '@/components/GoalForm';
-import { Search, Filter, Grid3x3, List, Plus, Target } from 'lucide-react';
+import { Search, Filter, Grid3x3, List, Plus, Target, ChevronDown, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './GoalsPage.module.css';
 
@@ -32,6 +32,7 @@ export default function GoalsPage({
   const [filterStatus, setFilterStatus] = useState<FilterType>('all');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [showFilters, setShowFilters] = useState(false);
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -108,45 +109,57 @@ export default function GoalsPage({
           />
         </div>
 
-        {/* Status Filter */}
-        <div className={styles.filterGroup}>
-          <button
-            className={`${styles.filterButton} ${filterStatus === 'all' ? styles.active : ''}`}
-            onClick={() => setFilterStatus('all')}
-          >
-            All
-          </button>
-          <button
-            className={`${styles.filterButton} ${filterStatus === 'in-progress' ? styles.active : ''}`}
-            onClick={() => setFilterStatus('in-progress')}
-          >
-            In Progress
-          </button>
-          <button
-            className={`${styles.filterButton} ${filterStatus === 'completed' ? styles.active : ''}`}
-            onClick={() => setFilterStatus('completed')}
-          >
-            Completed
-          </button>
-          <button
-            className={`${styles.filterButton} ${filterStatus === 'overdue' ? styles.active : ''}`}
-            onClick={() => setFilterStatus('overdue')}
-          >
-            Overdue
-          </button>
-        </div>
+        {/* Mobile Filter Toggle */}
+        <button 
+          className={styles.mobileFilterToggle}
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <SlidersHorizontal size={18} />
+          Filters
+          <ChevronDown size={16} className={showFilters ? styles.rotated : ''} />
+        </button>
 
-        {/* Category Filter */}
-        <div className={styles.filterGroup}>
-          {categories.map(cat => (
+        {/* Desktop Status Filter */}
+        <div className={styles.desktopFilters}>
+          <div className={styles.filterGroup}>
             <button
-              key={cat}
-              className={`${styles.filterButton} ${filterCategory === cat ? styles.active : ''}`}
-              onClick={() => setFilterCategory(cat)}
+              className={`${styles.filterButton} ${filterStatus === 'all' ? styles.active : ''}`}
+              onClick={() => setFilterStatus('all')}
             >
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              All
             </button>
-          ))}
+            <button
+              className={`${styles.filterButton} ${filterStatus === 'in-progress' ? styles.active : ''}`}
+              onClick={() => setFilterStatus('in-progress')}
+            >
+              In Progress
+            </button>
+            <button
+              className={`${styles.filterButton} ${filterStatus === 'completed' ? styles.active : ''}`}
+              onClick={() => setFilterStatus('completed')}
+            >
+              Completed
+            </button>
+            <button
+              className={`${styles.filterButton} ${filterStatus === 'overdue' ? styles.active : ''}`}
+              onClick={() => setFilterStatus('overdue')}
+            >
+              Overdue
+            </button>
+          </div>
+
+          {/* Category Filter */}
+          <div className={styles.filterGroup}>
+            {categories.map(cat => (
+              <button
+                key={cat}
+                className={`${styles.filterButton} ${filterCategory === cat ? styles.active : ''}`}
+                onClick={() => setFilterCategory(cat)}
+              >
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* View Toggle */}
@@ -170,9 +183,49 @@ export default function GoalsPage({
         {/* Add Button */}
         <button className={styles.addButton} onClick={onAddGoal}>
           <Plus size={18} />
-          Add Goal
+          <span className={styles.addButtonText}>Add Goal</span>
         </button>
       </div>
+
+      {/* Mobile Filters Dropdown */}
+      <AnimatePresence>
+        {showFilters && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className={styles.mobileFiltersDropdown}
+          >
+            <div className={styles.mobileFilterSection}>
+              <label className={styles.mobileFilterLabel}>Status</label>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value as FilterType)}
+                className={styles.mobileSelect}
+              >
+                <option value="all">All Status</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="overdue">Overdue</option>
+              </select>
+            </div>
+            <div className={styles.mobileFilterSection}>
+              <label className={styles.mobileFilterLabel}>Category</label>
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className={styles.mobileSelect}
+              >
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>
+                    {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Goals Display */}
       {filteredGoals.length === 0 ? (

@@ -280,3 +280,173 @@
 .dark .emptyState p {
   color: #9ca3af;
 }
+
+/* Mobile Responsive Styles */
+.mobileFilterToggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: var(--color-white);
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #374151;
+}
+
+.container.dark .mobileFilterToggle {
+  background: #374151;
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+.mobileFilterToggle .rotated {
+  transform: rotate(180deg);
+}
+
+.desktopFilters {
+  display: contents;
+}
+
+.mobileFiltersDropdown {
+  display: none;
+  background: var(--color-white);
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.container.dark .mobileFiltersDropdown {
+  background: #374151;
+  border-color: #4b5563;
+}
+
+.mobileFilterSection {
+  margin-bottom: 1rem;
+}
+
+.mobileFilterSection:last-child {
+  margin-bottom: 0;
+}
+
+.mobileFilterLabel {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.container.dark .mobileFilterLabel {
+  color: #9ca3af;
+}
+
+.mobileSelect {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  color: #111827;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+}
+
+.container.dark .mobileSelect {
+  background-color: #1f2937;
+  border-color: #4b5563;
+  color: #f9fafb;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.mobileSelect:focus {
+  outline: none;
+  border-color: var(--color-blue-600);
+}
+
+.addButtonText {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .statsBar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .statItem {
+    text-align: center;
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 0.5rem;
+  }
+
+  .container.dark .statItem {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .statValue {
+    font-size: 1.25rem;
+  }
+
+  .mobileFilterToggle {
+    display: flex;
+  }
+
+  .desktopFilters {
+    display: none;
+  }
+
+  .mobileFiltersDropdown {
+    display: block;
+  }
+
+  .controls {
+    gap: 0.75rem;
+  }
+
+  .searchBar {
+    min-width: unset;
+    flex: 1 1 100%;
+    order: 1;
+  }
+
+  .mobileFilterToggle {
+    order: 2;
+    flex: 1;
+  }
+
+  .viewToggle {
+    order: 3;
+  }
+
+  .addButton {
+    order: 4;
+    padding: 0.625rem;
+  }
+
+  .addButtonText {
+    display: none;
+  }
+}

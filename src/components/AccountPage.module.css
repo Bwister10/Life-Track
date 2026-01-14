@@ -28,6 +28,45 @@
   color: #9ca3af;
 }
 
+/* Loading State */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loadingState .spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid #e2e8f0;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.container.dark .loadingState .spinner {
+  border-color: #334155;
+  border-top-color: #60a5fa;
+}
+
+.loadingState p {
+  color: #64748b;
+  font-size: 0.9375rem;
+}
+
+.container.dark .loadingState p {
+  color: #94a3b8;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Auth Required Overlay */
 .authRequired {
   display: flex;
